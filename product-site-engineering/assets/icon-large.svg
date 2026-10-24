@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" role="img" aria-labelledby="title desc">
+  <title id="title">Product Site Engineering</title>
+  <desc id="desc">A browser window connected to product, code, tests, logs and release checkpoints.</desc>
+  <rect width="960" height="480" rx="48" fill="#F5F1E8"/>
+  <rect x="90" y="72" width="500" height="336" rx="24" fill="#FFFDFC" stroke="#315B52" stroke-width="16"/>
+  <path d="M90 130h500" stroke="#315B52" stroke-width="16"/>
+  <circle cx="128" cy="101" r="9" fill="#C36A4A"/>
+  <circle cx="160" cy="101" r="9" fill="#D5A447"/>
+  <circle cx="192" cy="101" r="9" fill="#79A18F"/>
+  <path d="M160 310l72-72 62 62 118-118" fill="none" stroke="#C36A4A" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#315B52">
+    <circle cx="160" cy="310" r="12"/><circle cx="232" cy="238" r="12"/>
+    <circle cx="294" cy="300" r="12"/><circle cx="412" cy="182" r="12"/>
+  </g>
+  <path d="M590 142h68M590 240h68M590 338h68" stroke="#315B52" stroke-width="12"/>
+  <g>
+    <rect x="658" y="100" width="212" height="84" rx="20" fill="#315B52"/>
+    <rect x="658" y="198" width="212" height="84" rx="20" fill="#C36A4A"/>
+    <rect x="658" y="296" width="212" height="84" rx="20" fill="#D5A447"/>
+    <text x="764" y="151" text-anchor="middle" font-family="system-ui, sans-serif" font-size="26" font-weight="700" fill="#FFFFFF">ACCEPT</text>
+    <text x="764" y="249" text-anchor="middle" font-family="system-ui, sans-serif" font-size="26" font-weight="700" fill="#FFFFFF">OBSERVE</text>
+    <text x="764" y="347" text-anchor="middle" font-family="system-ui, sans-serif" font-size="26" font-weight="700" fill="#342E28">RELEASE</text>
+  </g>
+</svg>

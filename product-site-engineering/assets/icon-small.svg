@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="title">
+  <title id="title">Product Site Engineering</title>
+  <rect width="400" height="400" rx="96" fill="#F5F1E8"/>
+  <path d="M82 105h236v190H82z" fill="none" stroke="#315B52" stroke-width="22" stroke-linejoin="round"/>
+  <path d="M82 148h236" stroke="#315B52" stroke-width="22"/>
+  <circle cx="118" cy="126" r="8" fill="#C36A4A"/>
+  <circle cx="148" cy="126" r="8" fill="#D5A447"/>
+  <path d="M126 236l42-42 34 34 72-72" fill="none" stroke="#C36A4A" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="126" cy="236" r="12" fill="#315B52"/>
+  <circle cx="168" cy="194" r="12" fill="#315B52"/>
+  <circle cx="202" cy="228" r="12" fill="#315B52"/>
+  <circle cx="274" cy="156" r="12" fill="#315B52"/>
+</svg>

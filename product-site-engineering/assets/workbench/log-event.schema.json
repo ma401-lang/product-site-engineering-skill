@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/log-event.schema.json",
+  "title": "Privacy-aware operational log event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "timestamp",
+    "level",
+    "event_name",
+    "service",
+    "environment",
+    "release",
+    "request_id",
+    "outcome"
+  ],
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "level": {
+      "type": "string",
+      "enum": ["debug", "info", "warn", "error"]
+    },
+    "event_name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{2,63}$"
+    },
+    "service": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "environment": {
+      "type": "string",
+      "enum": ["local", "test", "preview", "staging", "production"]
+    },
+    "release": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128
+    },
+    "trace_id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128
+    },
+    "route": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "method": {
+      "type": "string",
+      "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
+    },
+    "status_code": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 599
+    },
+    "duration_ms": {
+      "type": "number",
+      "minimum": 0
+    },
+    "outcome": {
+      "type": "string",
+      "enum": ["success", "rejected", "timeout", "cancelled", "error"]
+    },
+    "error_code": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]{2,63}$"
+    },
+    "dependency": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "retry_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "time_to_first_chunk_ms": {
+      "type": "number",
+      "minimum": 0
+    }
+  }
+}

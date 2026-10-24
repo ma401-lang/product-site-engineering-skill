@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/frontend-event.schema.json",
+  "title": "Privacy-aware frontend event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "timestamp",
+    "event_name",
+    "release",
+    "route",
+    "outcome"
+  ],
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "event_name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{2,63}$"
+    },
+    "release": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "route": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128
+    },
+    "outcome": {
+      "type": "string",
+      "enum": ["success", "rejected", "timeout", "cancelled", "error"]
+    },
+    "duration_bucket": {
+      "type": "string",
+      "enum": ["under_100ms", "100_500ms", "500ms_2s", "2s_8s", "8s_plus"]
+    },
+    "client_error_code": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]{2,63}$"
+    }
+  }
+}

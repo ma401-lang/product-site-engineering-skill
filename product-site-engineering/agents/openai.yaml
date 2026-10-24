@@ -1,0 +1,10 @@
+interface:
+  display_name: "产品网站工程交付"
+  short_description: "从需求、验收到上线、日志与反馈闭环的通用网站工程 Skill"
+  icon_small: "./assets/icon-small.svg"
+  icon_large: "./assets/icon-large.svg"
+  brand_color: "#315B52"
+  default_prompt: "使用 $product-site-engineering 把这个网站需求整理成可验收、可观测、可发布的纵向交付切片。"
+
+policy:
+  allow_implicit_invocation: true
