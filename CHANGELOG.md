@@ -1,0 +1,22 @@
+# Changelog
+
+All notable changes to this repository are documented here.
+
+## v1.1.0 — 2026-10-24
+
+- Added a benchmark-first delivery contract and a reusable `BENCHMARK.md` workbench template.
+- Added `BENCH-01`, `BENCH-02`, and `ASSET-01` acceptance cases.
+- Added a strict `audit_workbench.py --release` gate for benchmark status, owner, pre-change baseline, attributed references, rubric completeness, weight total, and acceptance IDs.
+- Added a regression test that proves draft benchmarks fail the release gate and a completed frozen benchmark passes it.
+- Added attributed website-building Skills and authoritative web standards/tutorials with applicability limits.
+- Expanded frontend guidance for performance, browser compatibility, metadata, localization, discoverability, and sharing.
+- Reworked the repository homepage around why, benchmark loop, capabilities, structure, quick start, verification, and learning sources; intentionally omitted a community section.
+- Added this repository's own frozen v1.1 benchmark.
+
+## v1.0.0 — 2026-10-24
+
+- Initial reusable Product Site Engineering Skill.
+- Added product, acceptance, engineering-boundary, protected-asset, roadmap, observability, runbook, decision and feedback workbench templates.
+- Added frontend/backend observability schemas and a vendor-neutral TypeScript example.
+- Added workbench initialization, audit, bundle validation, automated tests, and GitHub Actions.
+

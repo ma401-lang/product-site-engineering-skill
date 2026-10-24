@@ -6,7 +6,10 @@ Evidence states: `not_started`, `implemented_unverified`, `locally_passed`, `pre
 
 | ID | Priority | Scenario | Pass condition | Evidence | Status |
 |---|---|---|---|---|---|
+| BENCH-01 | P0 | A non-trivial build, redesign, migration or release begins | Current-state evidence is captured and a versioned benchmark with attributed references, anti-benchmarks, targets and mapped IDs is frozen before implementation | Benchmark review + decision log | not_started |
+| BENCH-02 | P1 | Product direction changes after the benchmark was frozen | Benchmark version and affected facts, acceptance IDs and roadmap are updated and re-frozen before implementation changes | Diff history + decision log | not_started |
 | FLOW-01 | P0 | A new user starts the primary flow | Reaches the first useful action without a fake control or internal jargon | Browser test | not_started |
+| ASSET-01 | P0 | Navigation or visual structure changes | Every protected route, capability and saved-data contract remains discoverable and compatible, or owner approval is recorded | Before/after asset map + regression test | not_started |
 | UI-01 | P0 | Primary async action is slow or fails | Loading, timeout, retry and duplicate prevention are visible and truthful | Component + browser test | not_started |
 | API-01 | P0 | API receives empty, malformed, oversized or unauthorized input | Request is rejected before side effects with a stable public error and request ID | Unit + integration test | not_started |
 | DATA-01 | P0 | Public bundle, storage and network are inspected | No secret, private prompt, admin credential or raw internal error is exposed | Build scan + browser inspection | not_started |

@@ -4,11 +4,11 @@ Initialized: {{DATE}}
 
 Each phase needs a visible outcome and exit criteria. Do not stack major features on top of unresolved P0 gates.
 
-## Phase 0 — product truth
+## Phase 0 — product truth and frozen benchmark
 
-Deliver product spec, acceptance matrix, asset register, data boundary and unresolved owner decisions.
+Deliver product intent, current-state evidence, an attributed and frozen benchmark, acceptance matrix, asset register, data boundary and unresolved owner decisions.
 
-Exit: positioning, target user, main loop, non-goals and P0 scenarios are unambiguous.
+Exit: positioning, target user, main loop, non-goals, benchmark targets, protected assets and P0 scenarios are unambiguous; the release audit's benchmark checks pass.
 
 ## Phase 1 — engineering baseline
 
@@ -38,4 +38,4 @@ Exit: production flow works, feedback arrives, and rollback is executable.
 
 Choose one next constraint from real evidence: discoverability, retention, quality, performance, trust, synchronization, billing, or scope reduction.
 
-Do not expand feature count by default.
+If evidence changes the intended direction, revise and re-freeze the benchmark before changing the roadmap or implementation. Do not expand feature count by default.

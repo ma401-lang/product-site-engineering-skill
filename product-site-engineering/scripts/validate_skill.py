@@ -11,6 +11,7 @@ from pathlib import Path
 
 SKILL_NAME = "product-site-engineering"
 REQUIRED_REFERENCES = {
+    "benchmark-first.md",
     "delivery-loop.md",
     "frontend-quality.md",
     "backend-api-data.md",
@@ -18,6 +19,7 @@ REQUIRED_REFERENCES = {
     "ai-product-safety.md",
     "release-operations.md",
     "prompt-learning-resources.md",
+    "website-building-resources.md",
 }
 REQUIRED_SCRIPTS = {
     "init_workbench.py",
@@ -77,6 +79,7 @@ def validate(argument: str) -> list[str]:
     required_paths = {
         skill / "agents" / "openai.yaml",
         skill / "assets" / "examples" / "typescript" / "observability.ts",
+        skill / "assets" / "workbench" / "BENCHMARK.md",
         skill / "assets" / "workbench" / "frontend-event.schema.json",
         skill / "assets" / "workbench" / "log-event.schema.json",
     }

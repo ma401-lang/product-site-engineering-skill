@@ -20,6 +20,7 @@ A non-trivial product should have one authoritative place for each concern. Exis
 | Concern | Minimum contents |
 |---|---|
 | Product system spec | Outcome, target user, primary loop, non-goals, scope, safety and data boundaries |
+| Benchmark | Versioned current baseline, attributed references, anti-benchmarks, quality dimensions, targets and acceptance mappings |
 | Acceptance matrix | Stable ID, priority, scenario, passing evidence, status |
 | Engineering boundaries | Current stack, directory/API/data boundaries, reuse decisions, migration rules |
 | Asset register | Routes, capabilities, saved data, discoverability and compatibility requirements |
@@ -28,6 +29,8 @@ A non-trivial product should have one authoritative place for each concern. Exis
 | Runbook | Detection, triage, mitigation, rollback and follow-up |
 
 When older documents conflict, record the conflict and defer to the explicitly designated source of truth. Do not silently rewrite history.
+
+Freeze the benchmark after the minimal product intent is clear and before task splitting or implementation. If direction changes, update and re-freeze the benchmark before changing code. See [benchmark-first.md](benchmark-first.md).
 
 ## 3. Requirement to acceptance ID
 
@@ -69,14 +72,15 @@ A slice can use multiple commits, but its review should show the surrounding flo
 
 A module is complete only when:
 
-1. The goal, boundary, and acceptance IDs are recorded.
-2. The main action is real and the public UI has no fake controls.
-3. Empty, loading, failure, timeout, retry, and duplicate paths are handled where relevant.
-4. Product-specific logic has automated tests.
-5. Data, privacy, security, accessibility, and content rights were reviewed in proportion to risk.
-6. Build and relevant quality commands pass.
-7. Operational signals and a rollback path exist for released behavior.
-8. Any judgment that still requires a real user is marked as unverified.
+1. The goal and boundary are recorded; current-state evidence was captured before implementation.
+2. The benchmark is frozen, versioned, attributed, and mapped to acceptance IDs.
+3. The main action is real and the public UI has no fake controls.
+4. Empty, loading, failure, timeout, retry, and duplicate paths are handled where relevant.
+5. Product-specific logic has automated tests.
+6. Data, privacy, security, accessibility, and content rights were reviewed in proportion to risk.
+7. Build and relevant quality commands pass.
+8. Operational signals and a rollback path exist for released behavior.
+9. Any judgment that still requires a real user is marked as unverified.
 
 ## 6. Feedback loop
 

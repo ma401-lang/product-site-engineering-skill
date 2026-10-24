@@ -2,6 +2,8 @@
 
 Use this reference for new flows, visual restructuring, navigation changes, forms, responsive work, or client-side persistence.
 
+Before choosing a visual direction, freeze the relevant product benchmark. Record why references are comparable, which principles apply, and which brand or interaction details must not be copied. A gallery of attractive screenshots is not a benchmark. See [benchmark-first.md](benchmark-first.md).
+
 ## Protected-asset map
 
 Before restructuring, inventory:
@@ -62,6 +64,34 @@ Test the actual primary flow, not only screenshots:
 - software keyboard covering sticky inputs;
 - color contrast and non-color status cues;
 - touch targets and no accidental horizontal scrolling.
+
+Use the current [WCAG 2 resources](https://www.w3.org/WAI/standards-guidelines/wcag/) for conformance claims. Automated scans are useful regression checks, but they do not replace keyboard, focus, announcement, zoom, and real-task review.
+
+## Performance and compatibility
+
+- Put measurable performance targets in the benchmark and record whether evidence is lab, preview, field, or user-device data.
+- Inspect request waterfalls, server timing, JavaScript execution, fonts, images, hydration, third-party scripts, and layout shifts before adding custom infrastructure.
+- Test the browsers and devices the product actually supports; do not infer compatibility from one Chromium run.
+- Preserve useful content and controls when JavaScript, storage, a third-party dependency, or a slow network fails where the product contract requires resilience.
+- Prefer semantic HTML and platform behavior before recreating controls in JavaScript.
+- Treat performance regressions in the primary flow as product regressions, not optional polish.
+
+Use current [Core Web Vitals](https://web.dev/explore/learn-core-web-vitals) definitions when they are part of the benchmark and [Playwright's testing guidance](https://playwright.dev/docs/best-practices) for user-visible browser scenarios. Record the source and verification date rather than copying mutable thresholds into this Skill.
+
+## Metadata, discoverability, and sharing
+
+For public content surfaces, decide explicitly:
+
+- unique, useful page title and description;
+- canonical URL, redirects, trailing-slash and duplicate-content behavior;
+- robots and sitemap behavior, including `noindex` on previews or private pages;
+- language, direction, locale-sensitive text, dates, numbers, and longer translations;
+- social/share metadata and a working fallback image;
+- structured data only when it truthfully describes visible content;
+- stable, descriptive routes and internal links;
+- a useful not-found state and preserved deep links after migration.
+
+Search visibility is an outcome to observe, not a guaranteed consequence of adding tags. Use current [Google Search documentation](https://developers.google.com/search/docs/fundamentals/seo-starter-guide) when search discovery is in scope, while keeping people-first information architecture as the product requirement.
 
 ## Client persistence
 

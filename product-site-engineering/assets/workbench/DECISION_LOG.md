@@ -2,7 +2,7 @@
 
 Initialized: {{DATE}}
 
-Record choices that affect product positioning, billing, data, content rights, safety, architecture, deployment or material maintenance cost.
+Record choices that affect benchmark versions, product positioning, billing, data, content rights, safety, architecture, deployment or material maintenance cost.
 
 ## Decision template
 

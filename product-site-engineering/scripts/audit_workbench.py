@@ -15,6 +15,7 @@ DEFAULT_OUTPUT = Path("docs/product-workbench")
 REQUIRED_FILES = {
     "WORKBENCH.md",
     "PRODUCT_SYSTEM_SPEC.md",
+    "BENCHMARK.md",
     "ACCEPTANCE_MATRIX.md",
     "ENGINEERING_BOUNDARIES.md",
     "PRODUCT_ASSET_REGISTER.md",
@@ -29,6 +30,32 @@ REQUIRED_FILES = {
 PLACEHOLDER = re.compile(r"\{\{[A-Z0-9_]+\}\}")
 ACCEPTANCE_ROW = re.compile(
     r"^\|\s*([A-Z][A-Z0-9]+-\d{2,})\s*\|\s*(P[012])\s*\|",
+    re.MULTILINE,
+)
+BENCHMARK_STATUS = re.compile(
+    r"^Status:\s*`?(draft|frozen)`?\s*$",
+    re.IGNORECASE | re.MULTILINE,
+)
+BENCHMARK_VERSION = re.compile(
+    r"^Benchmark version:\s*`?([^`\s]+)`?\s*$",
+    re.IGNORECASE | re.MULTILINE,
+)
+BENCHMARK_OWNER = re.compile(
+    r"^Owner:\s*`?([^`\n]+)`?\s*$",
+    re.IGNORECASE | re.MULTILINE,
+)
+BENCHMARK_REFERENCE_ROW = re.compile(
+    r"^\|\s*BMK-\d{2,}\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*"
+    r"(?:<?https://[^|\s>]+>?|\[[^\]]+\]\(https://[^)]+\))\s*\|",
+    re.IGNORECASE | re.MULTILINE,
+)
+BENCHMARK_BASELINE_ROW = re.compile(
+    r"^\|\s*BASE-\d{2,}\s*\|\s*([^|]*)\|\s*([^|]*)\|\s*([^|]*)\|\s*([^|]*)\|$",
+    re.IGNORECASE | re.MULTILINE,
+)
+BENCHMARK_RUBRIC_ROW = re.compile(
+    r"^\|\s*([^|]+?)\s*\|\s*(\d{1,3})\s*\|\s*([^|]*)\|\s*([^|]*)\|"
+    r"\s*([^|]*)\|\s*([^|]*)\|$",
     re.MULTILINE,
 )
 SECRET_PATTERNS = {
@@ -56,6 +83,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Relative workbench directory inside the project.",
     )
     parser.add_argument("--json", action="store_true", help="Emit machine-readable output.")
+    parser.add_argument(
+        "--release",
+        action="store_true",
+        help="Treat an unfrozen or unattributed benchmark as a release-blocking error.",
+    )
     return parser.parse_args(argv)
 
 
@@ -71,7 +103,7 @@ def workbench_root(target: Path, output: str) -> Path:
     return root
 
 
-def audit(target: Path, output: str) -> list[Finding]:
+def audit(target: Path, output: str, release: bool = False) -> list[Finding]:
     findings: list[Finding] = []
     try:
         root = workbench_root(target, output)
@@ -114,6 +146,118 @@ def audit(target: Path, output: str) -> list[Finding]:
             findings.append(Finding("error", "NO_P0", "No P0 acceptance row found"))
         for item in duplicates:
             findings.append(Finding("error", "DUPLICATE_ID", item))
+        required_benchmark_ids = {"BENCH-01", "BENCH-02"}
+        missing_benchmark_ids = sorted(required_benchmark_ids.difference(ids))
+        for item in missing_benchmark_ids:
+            findings.append(
+                Finding(
+                    "error" if release else "warning",
+                    "MISSING_BENCHMARK_ACCEPTANCE",
+                    item,
+                )
+            )
+
+    benchmark = root / "BENCHMARK.md"
+    if benchmark.is_file():
+        benchmark_text = benchmark.read_text(encoding="utf-8")
+        benchmark_severity = "error" if release else "warning"
+        status = BENCHMARK_STATUS.search(benchmark_text)
+        if status is None:
+            findings.append(
+                Finding(
+                    benchmark_severity,
+                    "BENCHMARK_STATUS_MISSING",
+                    "BENCHMARK.md must declare Status: draft or frozen",
+                )
+            )
+        elif status.group(1).lower() != "frozen":
+            findings.append(
+                Finding(
+                    benchmark_severity,
+                    "BENCHMARK_NOT_FROZEN",
+                    "BENCHMARK.md is still draft",
+                )
+            )
+
+        if BENCHMARK_VERSION.search(benchmark_text) is None:
+            findings.append(
+                Finding(
+                    benchmark_severity,
+                    "BENCHMARK_VERSION_MISSING",
+                    "BENCHMARK.md must declare a version",
+                )
+            )
+
+        owner = BENCHMARK_OWNER.search(benchmark_text)
+        if owner is None or owner.group(1).strip().lower() in {
+            "",
+            "unassigned",
+            "replace me",
+            "—",
+            "-",
+        }:
+            findings.append(
+                Finding(
+                    benchmark_severity,
+                    "BENCHMARK_OWNER_MISSING",
+                    "Assign an accountable benchmark owner before release",
+                )
+            )
+
+        references = BENCHMARK_REFERENCE_ROW.findall(benchmark_text)
+        useful_references = [
+            (name.strip(), author.strip())
+            for name, author in references
+            if "replace with" not in name.lower()
+            and "replace with" not in author.lower()
+            and author.strip() not in {"", "—", "-"}
+        ]
+        if len(useful_references) < 2:
+            findings.append(
+                Finding(
+                    benchmark_severity,
+                    "BENCHMARK_REFERENCE_MISSING",
+                    "Add at least two direct HTTPS references with authors or publishers",
+                )
+            )
+
+        baselines = BENCHMARK_BASELINE_ROW.findall(benchmark_text)
+        captured_baselines = [
+            row for row in baselines if row[2].strip() not in {"", "—", "-"}
+        ]
+        if not captured_baselines:
+            findings.append(
+                Finding(
+                    benchmark_severity,
+                    "BENCHMARK_BASELINE_MISSING",
+                    "Capture a current-state result or artifact before implementation",
+                )
+            )
+
+        rubric_rows = BENCHMARK_RUBRIC_ROW.findall(benchmark_text)
+        total_weight = sum(int(row[1]) for row in rubric_rows)
+        if not rubric_rows or total_weight != 100:
+            findings.append(
+                Finding(
+                    benchmark_severity,
+                    "BENCHMARK_WEIGHT_TOTAL",
+                    f"Benchmark rubric weights must total 100; found {total_weight}",
+                )
+            )
+        incomplete_rubric = [
+            row[0].strip()
+            for row in rubric_rows
+            if any(not value.strip() for value in row[2:])
+        ]
+        if incomplete_rubric:
+            findings.append(
+                Finding(
+                    benchmark_severity,
+                    "BENCHMARK_RUBRIC_INCOMPLETE",
+                    "Fill current baseline, target, measurement, and acceptance IDs for: "
+                    + ", ".join(incomplete_rubric),
+                )
+            )
 
     schema_paths = (
         root / "log-event.schema.json",
@@ -166,7 +310,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"error: target directory does not exist: {target}", file=sys.stderr)
         return 2
 
-    findings = audit(target, args.output)
+    findings = audit(target, args.output, release=args.release)
     errors = [finding for finding in findings if finding.severity == "error"]
     if args.json:
         print(
@@ -183,7 +327,10 @@ def main(argv: list[str] | None = None) -> int:
         for finding in findings:
             print(f"{finding.severity.upper()} {finding.code}: {finding.message}")
         if not findings:
-            print("PASS: workbench structure, acceptance IDs, placeholders, and log schema")
+            print(
+                "PASS: workbench structure, benchmark, acceptance IDs, placeholders, "
+                "and log schema"
+            )
         elif not errors:
             print(f"PASS WITH {len(findings)} WARNING(S)")
 
