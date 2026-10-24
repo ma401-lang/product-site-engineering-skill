@@ -165,9 +165,6 @@ python3 -m unittest discover -s tests -v
 
 GitHub Actions 会在 push 和 pull request 时运行同样的检查。发布包还会验证 Skill 元数据、必需资源、脚本语法、文件数量与大小限制，以及日志 schema 的字段白名单。
 
-首页结构参考了 HKUST DIAL、Yuyu Luo 发起的 [Supervisor-Skills](https://github.com/HKUSTDial/Supervisor-Skills)，重点学习它如何先讲清项目价值，再给出能力、结构和开始方式。本站没有加入新闻或社区板块。
-
-仓库只保存通用方法、脚本和无敏感数据模板，不包含 Psyche Guide 的私有提示词、用户对话或业务数据。
 
 ## License
 
