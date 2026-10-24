@@ -1,97 +1,114 @@
 <div align="center">
   <img src="product-site-engineering/assets/icon-large.svg" alt="Product Site Engineering Skill" width="168" />
   <h1>Product Site Engineering Skill</h1>
-  <p><strong>先冻结 benchmark，再把网站需求交付成可验收、可观测、可发布的真实产品。</strong></p>
-  <p>Benchmark-first website delivery for Codex and other Agent Skills-compatible tools.</p>
+  <p><strong>陪你把一个还没想清楚的网站想法，走到可以验证、上线和持续改进的产品。</strong></p>
+  <p>从想法、调研、需求和设计开始，连接前后端、测试、日志、发布、反馈与 bad-case 记忆。</p>
   <p>
     <a href="https://github.com/ma401-lang/product-site-engineering-skill/actions/workflows/validate.yml"><img src="https://img.shields.io/github/actions/workflow/status/ma401-lang/product-site-engineering-skill/validate.yml?branch=main&style=flat-square&label=validation" alt="Validation status" /></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-315B52?style=flat-square" alt="MIT License" /></a>
-    <a href="https://github.com/ma401-lang/product-site-engineering-skill/releases/tag/v1.1.0"><img src="https://img.shields.io/badge/version-v1.1.0-CB7A54?style=flat-square" alt="Version 1.1.0" /></a>
+    <a href="https://github.com/ma401-lang/product-site-engineering-skill/releases/tag/v1.2.0"><img src="https://img.shields.io/badge/version-v1.2.0-CB7A54?style=flat-square" alt="Version 1.2.0" /></a>
   </p>
 </div>
 
-> 这不是“生成一个好看的页面”的万能提示词。它是一套网站产品工程工作流：先明确用户结果并冻结质量 benchmark，再连接产品规范、验收编号、前后端边界、日志、测试、部署、回滚和真实反馈。
+## 它能帮你完成什么
 
-仓库只保留从真实交付中抽象出的通用方法、脚本和无敏感数据模板，不包含 Psyche Guide 的私有提示词、用户内容或业务机密。
+你可能只有一句话：“我想做一个五分钟就能完成的测评，结果还要在后续使用中慢慢修正。”这时直接写页面很容易把早期猜测变成产品事实。做到一半，导航、题目、数据结构和 AI 提示各自发展；等用户说“不好用”，团队又很难找到问题究竟来自需求、设计、代码还是模型。
 
-## 为什么做这个 Skill
+使用这个 Skill 后，Agent 会先保留你的原始想法，列出真正会改变产品方向的问题，再用访谈、竞品、标准、现有数据或小型原型补证据。确定需求和设计时，每个重要选择都能追溯到想法或研究结果。进入开发后，它会继续检查前端状态、API、数据、日志、AI 行为、部署和回滚。测试中任何让你不满意的结果都会进入 `BAD_CASES.md`，并绑定一个回归检查。几周后再次改产品时，Agent 仍然知道哪些错误已经发生过、当时怎样修、为什么不能再出现。
 
-网站项目最容易在三处跑偏：开工时没有统一的好坏标准；实现中只完成顺利路径或视觉外壳；上线时把“本地能跑”误写成“产品已验证”。结果往往是需求、设计、代码、日志和部署各自正确，却没有形成一个可用的用户闭环。
-
-这个 Skill 把方向和证据放在同一条链上：
+最终会同时得到可运行页面和一条可以复查的产品推理链：
 
 ```text
-用户意图
-  -> benchmark v1（当前基线、参考来源、反例、权重、目标）
-  -> 产品事实来源与验收 ID
-  -> 可运行的纵向切片
-  -> 自动测试、预览、生产证据
-  -> 脱敏反馈
-  -> benchmark v2（先改方向，再改实现）
+原始想法
+  → 用户与问题调研
+  → 需求选择与设计假设
+  → 冻结 benchmark
+  → 验收场景
+  → 前后端实现
+  → 测试与 bad cases
+  → 预览、上线与回滚
+  → 真实反馈
+  → 下一版 benchmark
 ```
 
-benchmark 不是审美拼贴。它要求记录参考来源及作者、为什么可比、学什么、不复制什么，并把方向转成可观察的评价维度。只要方向发生改变，就先升级 benchmark 和受影响的验收项，再动代码；旧证据不被重写。本仓库也用自己的 [BENCHMARK.md](BENCHMARK.md) 约束 v1.1，而不是只要求别人遵守。
+这条链适合新网站、已有产品改版、框架或云平台迁移，也适合带 AI 对话、知识库、长期记忆或高敏感数据的产品。
 
-## 能做什么
+## Benchmark 从想法阶段就开始
 
-| 模块 | 交付能力 |
+这里的 benchmark 是一份会随产品演进、但不能事后篡改的方向记录。它先回答“为什么值得做、还不知道什么、用什么方法弄清楚”，再记录参考产品和标准、当前基线、反例、质量权重与目标。
+
+每个项目的 `BENCHMARK.md` 会保留四层信息：
+
+1. 原始想法、已知事实、假设、未知问题和风险最大的判断。
+2. 产品调研的问题、方法、来源、发现、可信度、局限以及对决策的影响。
+3. 需求和设计选择，它们分别由哪些想法或证据支持，哪些备选方案被放弃。
+4. 当前产品基线、外部参考、anti-benchmark、测量方法和验收 ID。
+
+方向改变时先升级 benchmark，再调整需求、设计和代码。旧版本继续保留，因此可以看出产品真的进步了，还是评价标准被临时改低了。
+
+## Bad cases 是产品的长期记忆
+
+AI 很容易在一次对话里记住教训，换一轮任务后又犯同样的问题。测试报告和聊天记录也常常只留下“已修复”，没有留下原始场景与预防机制。
+
+工作台里的 `BAD_CASES.md` 专门保存这些问题。以下情况都会进入记录：
+
+- 自动化测试、人工测试、可用性测试或安全检查出现有意义的失败；
+- 产品负责人或用户明确表示结果不满意；
+- AI 输出违反内容、事实、记忆或安全边界；
+- 线上故障造成用户可见的问题；
+- 已经处理过的问题再次出现。
+
+每条 bad case 都包含触发场景、期望结果、实际结果、严重程度、责任层、负责人、回归或评测 ID、预防机制、解决证据和复发次数。P0 问题没有验证通过时，发布审计会阻止把它描述成可上线状态。再次复发时继续更新原记录，并说明上一次防线为什么没有拦住。
+
+## 可以直接配合的外部网站 Skills
+
+下面列出的都是实际存在的开源 Skill 或 Skill 集合。它们各自保持独立来源，方便查看许可证、版本和更新记录；本仓库负责把它们放进同一条产品交付链，不会把第三方的可变内容悄悄复制成自己的规则。
+
+| 产品阶段 | Skill 与作者 | 直接使用它解决什么 | 如何与本 Skill 配合 |
+|---|---|---|---|
+| 想法澄清 | [`brainstorming`](https://github.com/obra/superpowers/blob/main/skills/brainstorming/SKILL.md)，Jesse Vincent / obra 与 Prime Radiant contributors | 追问动机、已有尝试、喜欢和讨厌的案例，把模糊想法写成可讨论的设计 | 将结论写入 benchmark 的想法、研究和决策区，再由本 Skill 管理后续证据 |
+| 实施规划 | [`writing-plans`](https://github.com/obra/superpowers/blob/main/skills/writing-plans/SKILL.md)，Jesse Vincent / obra 与 Prime Radiant contributors | 把批准后的设计拆成带文件、测试和验证步骤的小任务 | 等 benchmark、需求和设计方向冻结后使用 |
+| 视觉设计 | [`frontend-design`](https://github.com/anthropics/claude-code/blob/main/plugins/frontend-design/skills/frontend-design/SKILL.md)，Anthropic；Prithvi Rajasekaran、Alexander Bricken | 建立与产品内容相符的字体、版式、色彩和动效方向，减少模板感 | 把选定方向记录为设计假设，再接受可访问性、性能和资产保护检查 |
+| 设计系统探索 | [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)，nextlevelbuilder | 搜索产品类型、设计系统、配色、字体、交互模式和多框架实现参考 | 用来比较候选方案，最后只保留一个经过 benchmark 约束的方向 |
+| 界面审查 | [`web-design-guidelines`](https://github.com/vercel-labs/agent-skills/blob/main/skills/web-design-guidelines/SKILL.md)，Vercel | 审查 UI、交互和无障碍问题 | 把发现转成当前项目的验收 ID 和 bad case，再用本项目测试验证 |
+| React 性能 | [`react-best-practices`](https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices)，Vercel | 按影响程度检查 React 与 Next.js 性能问题 | 仅在技术栈匹配时使用，并用改动前后的同一场景测量结果 |
+
+具体组合顺序、信任边界和适用场景见 [external-skill-integration.md](product-site-engineering/references/external-skill-integration.md)。更多经过标注的教程、标准和作者信息见 [website-building-resources.md](product-site-engineering/references/website-building-resources.md)。
+
+## 它会留下哪些可用成果
+
+| 你正在做的事 | 工作台留下的成果 |
 |---|---|
-| Benchmark-first | 捕获改动前基线，选择可比参考与标准，登记作者/发布方、反例、权重、目标、验收映射和变更历史 |
-| 产品契约 | 从模糊需求建立目标用户、主闭环、非目标、当前事实和稳定验收 ID |
-| 资产保护 | 在 UI 重构前登记路由、入口、能力和已保存数据，防止“简化”变成误删或隐藏 |
-| 前端质量 | 覆盖空、载入、成功、失败、超时、重试、取消、离线、存储失败和重复提交状态 |
-| 后端与数据 | 约束输入校验、鉴权、限流、幂等、统一错误、请求 ID、迁移和租户/用户隔离 |
-| 日志与可观测性 | 提供前端事件与后端日志白名单、请求关联、流式生命周期、看板信号和运行手册 |
-| AI 产品安全 | 建立服务端提示、知识治理、记忆同意、确定性护栏、坏案例评测和生产复测边界 |
-| 发布与迁移 | 用行为等价清单、预览环境、区域实测、发布标识和回滚证据降低框架或托管迁移风险 |
-| 用户反馈 | 把脱敏真实失败转成新的验收/评测用例，修改最小责任层并验证回归 |
+| 从想法判断要不要做 | 研究问题、证据来源、发现、可信度和决策影响 |
+| 把调研变成产品 | 需求与设计追踪、非目标、保护资产、稳定验收 ID |
+| 开发完整用户流程 | 空状态、加载、成功、失败、超时、重试、取消、重复提交与存储故障 |
+| 连接前端、后端和数据 | 输入校验、鉴权、限流、幂等、错误协议、迁移和用户/租户隔离 |
+| 看见线上发生了什么 | 前端事件和后端日志白名单、request ID、看板、告警和运行手册 |
+| 构建 AI 功能 | 服务端提示、知识来源、记忆同意、确定性护栏、评测与 bad cases |
+| 上线或迁移 | 预览检查、区域实测、发布标识、数据兼容、回滚演练和生产证据 |
+| 持续改进 | 脱敏反馈、bad-case 复发记录、回归检查和下一版 benchmark |
 
-## 优势在哪
+所有公开按钮都必须真的工作、清楚说明暂不可用，或从发布版本中移除。日志默认排除聊天正文、表单正文、Cookie、令牌、完整 IP、原始邮箱和私有提示。
 
-1. **先固定“尺子”**：非琐碎任务必须先冻结 benchmark，发布审计会阻止草稿 benchmark 进入发布结论。
-2. **产品与工程不脱节**：实现必须绑定验收 ID；完成标准同时包含用户场景、失败路径和证据层级。
-3. **保护已有价值**：资产登记和改版前后映射阻止页面、入口、历史数据或未来商业化代码被无意删除。
-4. **可观测但不过度采集**：字段白名单默认排除正文、Cookie、令牌、原始邮箱、完整 IP 和上游私密内容。
-5. **AI 不只靠堆提示词**：提示、状态、检索、工具、护栏和评测分层，问题能落到真正负责的层。
-6. **复用优先**：先用已有项目能力、官方平台和成熟生态；只有关键约束无法满足时才自建核心设施。
-7. **证据诚实**：严格区分已规范、已实现、本地通过、预览通过、生产通过和真实用户验证。
+## 开始使用
 
-## 教程与执行结构
+将仓库中的 `product-site-engineering/` 安装到 Agent Skills 目录。在 Codex 的常见本地配置中可以放到 `~/.codex/skills/product-site-engineering/`。安装方式仍应以当前工具的官方说明为准。
 
-这个仓库采用“Guide + Skill + Workbench + Checks”四层结构：
+从一个新想法开始，可以这样说：
 
 ```text
-product-site-engineering-skill/
-├── README.md                              # 项目定位、能力与快速开始
-├── BENCHMARK.md                           # 本仓库自身的方向基线与 v1.1 冻结记录
-├── product-site-engineering/
-│   ├── SKILL.md                           # 精简路由与强制交付流程
-│   ├── references/                        # benchmark、前端、后端、日志、AI、发布与学习指南
-│   ├── assets/workbench/                  # 可复制的产品工程工作台
-│   ├── assets/examples/typescript/        # 可运行的日志示例
-│   ├── scripts/                           # 初始化、普通审计、发布审计、Skill 校验
-│   └── agents/openai.yaml                 # Skill 展示与默认调用元数据
-├── tests/                                 # 工作台与发布门禁回归测试
-└── .github/workflows/validate.yml         # 持续集成
+使用 $product-site-engineering。我现在只有一个网站想法，请先帮我保留原始意图，
+列出会改变产品方向的未知问题，完成必要调研，再一起确定需求、设计和 benchmark。
 ```
 
-- `SKILL.md` 只保留触发条件、主流程和安全边界。
-- `references/` 在相关任务发生时按需读取，避免把所有教程塞进上下文。
-- `scripts/` 承担可重复、确定性的机械检查。
-- `assets/` 提供可以复制后再定制的工作台与 schema。
-
-这种拆分遵循 [OpenAI Skills 指南](https://developers.openai.com/api/docs/guides/tools-skills)的渐进披露原则。
-
-## 快速开始
-
-把仓库中的 `product-site-engineering/` 安装到支持 Agent Skills 的环境，然后直接说：
+改造已有网站时，可以这样说：
 
 ```text
-使用 $product-site-engineering，先为这个网站建立并冻结 benchmark，
-再把需求做成可验收、可观测、可发布的纵向切片。
+使用 $product-site-engineering。先读取现有产品和保护资产，建立改动前基线，
+把这次改版做成完整纵向切片。所有不满意的测试结果都写入 BAD_CASES.md 并增加回归检查。
 ```
 
-在一个项目中初始化工作台：
+项目还没有工程工作台时，可运行：
 
 ```bash
 python3 product-site-engineering/scripts/init_workbench.py \
@@ -99,14 +116,14 @@ python3 product-site-engineering/scripts/init_workbench.py \
   --project "My Product"
 ```
 
-普通审计允许 benchmark 处于草稿，便于学习和规划：
+普通审计允许 benchmark 仍在调研阶段：
 
 ```bash
 python3 product-site-engineering/scripts/audit_workbench.py \
   --target /absolute/path/to/project
 ```
 
-准备发布时使用严格门禁；benchmark 必须已冻结，包含改动前基线、负责人、完整评分尺，以及至少两个带作者/发布方的 HTTPS 参考来源：
+准备发布时运行严格审计：
 
 ```bash
 python3 product-site-engineering/scripts/audit_workbench.py \
@@ -114,45 +131,43 @@ python3 product-site-engineering/scripts/audit_workbench.py \
   --release
 ```
 
-初始化器默认写入 `docs/product-workbench/`，不会覆盖已有文件；面对陌生目录可先加 `--dry-run` 查看写入计划。
+严格审计会检查 benchmark 是否冻结、负责人和参考来源是否完整、权重是否为 100、验收 ID 是否存在、bad-case 结构是否完整，以及是否还有未解决的 P0 bad case。
 
-## Benchmark 工作法
+## 仓库结构
 
-新生成的 `BENCHMARK.md` 包含：
+```text
+product-site-engineering-skill/
+├── README.md
+├── BENCHMARK.md
+├── BAD_CASES.md
+├── product-site-engineering/
+│   ├── SKILL.md
+│   ├── references/
+│   ├── assets/workbench/
+│   │   ├── BENCHMARK.md
+│   │   ├── BAD_CASES.md
+│   │   └── ...
+│   ├── assets/examples/typescript/
+│   ├── scripts/
+│   └── agents/openai.yaml
+├── tests/
+└── .github/workflows/validate.yml
+```
 
-- 当前产品基线和改动前证据；
-- 两到五个可比产品、标准或本地基线，以及作者/发布方和直接来源；
-- 每个参考“学什么”和“不复制什么”；
-- 明确的 anti-benchmark；
-- 带权重、当前值、目标值、测量方法和验收 ID 的质量维度；
-- benchmark 版本、状态、负责人和方向变更历史。
-
-详细规则见 [benchmark-first.md](product-site-engineering/references/benchmark-first.md)，可选学习来源见 [website-building-resources.md](product-site-engineering/references/website-building-resources.md)。
+`SKILL.md` 负责主流程和边界，`references/` 保存按需加载的专业知识，`assets/workbench/` 提供可复制的产品记录，`scripts/` 把关键门禁变成可重复检查。这样的拆分遵循 [OpenAI Skills 指南](https://developers.openai.com/api/docs/guides/tools-skills)的渐进披露原则。
 
 ## 验证
-
-仓库脚本只依赖 Python 标准库：
 
 ```bash
 python3 product-site-engineering/scripts/validate_skill.py .
 python3 -m unittest discover -s tests -v
 ```
 
-GitHub Actions 会在 push 和 pull request 时运行同样的检查。发布包还会校验 Skill 元数据、必需资源、脚本语法、文件数量与大小限制，以及日志 schema 的字段白名单。
+GitHub Actions 会在 push 和 pull request 时运行同样的检查。发布包还会验证 Skill 元数据、必需资源、脚本语法、文件数量与大小限制，以及日志 schema 的字段白名单。
 
-## 学习来源
+首页结构参考了 HKUST DIAL、Yuyu Luo 发起的 [Supervisor-Skills](https://github.com/HKUSTDial/Supervisor-Skills)，重点学习它如何先讲清项目价值，再给出能力、结构和开始方式。本站没有加入新闻或社区板块。
 
-首页的信息节奏参考了 [Supervisor-Skills](https://github.com/HKUSTDial/Supervisor-Skills) 的“为什么存在 → 教程结构 → 能力清单 → 快速开始”，但没有复制内容，也没有加入新闻或社区运营板块。
-
-已核验并标注作者/发布方的网站 Skill、设计、工程流程、Playwright、WCAG、OWASP、性能、SEO、MDN、TanStack Start 与 Cloudflare Workers 资料见 [website-building-resources.md](product-site-engineering/references/website-building-resources.md)。提示工程和评测资料见 [prompt-learning-resources.md](product-site-engineering/references/prompt-learning-resources.md)。
-
-## 它不承诺什么
-
-- 不替代产品负责人对定位、收费、数据、版权和高风险安全边界的判断。
-- 不把别人的视觉风格、品牌、提示词或产品结构当成可直接复制的模板。
-- 不保证任意框架、云平台或地区网络天然适用；必须使用当前官方资料和真实部署测试。
-- 不把日志等同于完整监控平台，也不自动创建第三方账号或付费服务。
-- 不把提示词规范等同于生产护栏，也不把单次模型成功等同于稳定质量。
+仓库只保存通用方法、脚本和无敏感数据模板，不包含 Psyche Guide 的私有提示词、用户对话或业务数据。
 
 ## License
 

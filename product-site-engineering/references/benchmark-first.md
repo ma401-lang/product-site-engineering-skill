@@ -1,6 +1,6 @@
 # Benchmark-first delivery
 
-Use this reference before a non-trivial website build, redesign, migration, or release. A benchmark is the agreed comparison frame for the work: what good means, what must not drift, how the current product performs, and what evidence will show improvement.
+Use this reference from the moment a non-trivial website idea is being shaped. A benchmark is the product's versioned reasoning trail and comparison frame: why the idea matters, what research found, which requirement and design were chosen, what good means, what must not drift, and what evidence will show improvement.
 
 It is not a mood board, a list of fashionable sites, or permission to copy another product.
 
@@ -19,14 +19,17 @@ The benchmark complements, rather than replaces, the other sources of truth:
 
 ## Required sequence
 
-1. **State the intent.** Record the target user, primary outcome, scope, non-goals, and protected assets. This is just enough context to choose relevant comparisons.
-2. **Capture the current baseline.** Measure the existing flow before changing it: screenshots, route inventory, task completion, error behavior, accessibility, performance, logs, or other relevant evidence.
-3. **Select references deliberately.** Use two to five strong examples, standards, or current product baselines. For each one record its author or publisher, URL or local evidence, verification date, useful principle, and what must not be copied.
-4. **Distill principles, not pixels.** Translate references into observable dimensions such as information hierarchy, task completion, recovery, accessibility, visual coherence, performance, privacy, and operability.
-5. **Define anti-benchmarks.** Name tempting but harmful outcomes: decorative complexity, hidden protected features, generic AI styling, misleading controls, overcollection, fragile animation, or platform-specific behavior presented as universal.
-6. **Score and set targets.** Give each relevant dimension a weight, current score or baseline, target, measurement method, and acceptance IDs. Omit irrelevant dimensions rather than pretending every product needs the same rubric.
-7. **Freeze the benchmark.** Set `Status: frozen`, assign a version, owner, and date, then record the decision. Only then split tasks or implement.
-8. **Evaluate the result against the same frame.** Use the same scenarios and methods for baseline and candidate. Record regressions as well as improvements.
+1. **Preserve the original idea.** Record it in the owner's language, why it matters now, the target situation, current alternatives, known facts, assumptions, unknowns, and the riskiest belief.
+2. **Plan the research.** Turn unknowns into decision questions. For each question choose the smallest useful method, owner, source population or material, stopping rule, and privacy boundary.
+3. **Record evidence.** Keep the source or method, author/publisher where relevant, date, finding, confidence, limitation, and decision impact. Separate what a user said, what analytics showed, what a standard requires, and what the team inferred.
+4. **Choose requirements and design hypotheses.** Link each material requirement and design direction to idea/evidence IDs. Record discarded options and what future evidence would reopen the decision.
+5. **Capture the current baseline.** Measure the existing flow or substitute before changing it: screenshots, route inventory, task completion, error behavior, accessibility, performance, logs, or other relevant evidence.
+6. **Select references deliberately.** Use two to five strong examples, standards, or current product baselines. For each one record its author or publisher, URL or local evidence, verification date, useful principle, and what must not be copied.
+7. **Distill principles, not pixels.** Translate references into observable dimensions such as information hierarchy, task completion, recovery, accessibility, visual coherence, performance, privacy, and operability.
+8. **Define anti-benchmarks.** Name tempting but harmful outcomes: decorative complexity, hidden protected features, generic AI styling, misleading controls, overcollection, fragile animation, skipped research, or repeated known failures.
+9. **Score and set targets.** Give each relevant dimension a weight, current score or baseline, target, measurement method, and acceptance IDs. Omit irrelevant dimensions rather than pretending every product needs the same rubric.
+10. **Freeze the benchmark.** Set `Status: frozen`, assign a version, owner, and date, then record the decision. Only then split tasks or implement.
+11. **Evaluate and learn.** Use the same scenarios and methods for baseline and candidate. Send every meaningful failed or rejected result to `BAD_CASES.md`, then attach a regression check and resolution evidence.
 
 ## Default quality dimensions
 
@@ -54,7 +57,7 @@ When the product owner changes the intended direction:
 1. edit the benchmark first;
 2. increment its version and return its status to `draft`;
 3. record why the old frame is no longer sufficient;
-4. update affected product facts, acceptance IDs, protected-asset mappings, and roadmap items;
+4. update affected research conclusions, product facts, acceptance IDs, protected-asset mappings, bad cases, and roadmap items;
 5. re-freeze the benchmark;
 6. then change implementation.
 
@@ -63,6 +66,8 @@ Do not rewrite old evidence or retroactively lower a target to make the current 
 ## Benchmark review checklist
 
 - The references solve a comparable user or engineering problem, not merely share a visual style.
+- The original idea, important unknowns, research methods, findings and confidence are visible.
+- Material requirements and design hypotheses trace to evidence or are clearly marked as assumptions.
 - Every external reference has an author or publisher, a direct URL, and a verification date.
 - Current-state evidence was captured before implementation.
 - Useful principles and excluded copying are both explicit.
@@ -70,4 +75,4 @@ Do not rewrite old evidence or retroactively lower a target to make the current 
 - Targets map to stable acceptance IDs and executable or inspectable evidence.
 - Product safety, data boundaries, rights, and protected assets cannot be traded away by a weighted score.
 - A change in direction updates the benchmark before the code.
-
+- Failed tests, rejected outputs and repeated complaints are captured in the bad-case register rather than left in transient conversation memory.

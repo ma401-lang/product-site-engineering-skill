@@ -5,6 +5,8 @@ Use this reference for previews, production deployments, hosting changes, region
 ## Pre-release gate
 
 - The benchmark is frozen, current, and mapped to the release acceptance IDs; `audit_workbench.py --release` passes when the workbench is used.
+- Product research, requirement and design decisions are traceable for the released scope; every meaningful failed or rejected result has been reviewed in `BAD_CASES.md`.
+- No P0 bad case remains `observed`, `reproduced`, `prevented`, or `blocked`. An `accepted` P0 needs an explicit owner decision and review date.
 - Acceptance matrix identifies every P0 item and its evidence state.
 - Format, lint, typecheck, tests, evals, and production build pass where relevant.
 - Secrets and private data scans are clean.

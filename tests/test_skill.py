@@ -47,6 +47,7 @@ class SkillValidationTests(unittest.TestCase):
             workbench = target / "docs" / "product-workbench"
             self.assertTrue((workbench / "PRODUCT_SYSTEM_SPEC.md").is_file())
             self.assertTrue((workbench / "BENCHMARK.md").is_file())
+            self.assertTrue((workbench / "BAD_CASES.md").is_file())
             self.assertIn(
                 "Demo Product",
                 (workbench / "PRODUCT_SYSTEM_SPEC.md").read_text(encoding="utf-8"),
@@ -67,12 +68,43 @@ class SkillValidationTests(unittest.TestCase):
             self.assertEqual(draft_audit.returncode, 1)
             self.assertIn("BENCHMARK_NOT_FROZEN", draft_audit.stdout)
             self.assertIn("BENCHMARK_REFERENCE_MISSING", draft_audit.stdout)
+            self.assertIn("BENCHMARK_IDEA_INCOMPLETE", draft_audit.stdout)
+            self.assertIn("BENCHMARK_RESEARCH_MISSING", draft_audit.stdout)
+            self.assertIn("BENCHMARK_DECISION_TRACE_MISSING", draft_audit.stdout)
 
             benchmark = target / "docs" / "product-workbench" / "BENCHMARK.md"
             benchmark_text = benchmark.read_text(encoding="utf-8")
             benchmark_text = benchmark_text.replace("Status: `draft`", "Status: `frozen`")
             benchmark_text = benchmark_text.replace(
                 "Owner: `unassigned`", "Owner: `Product owner`"
+            )
+            benchmark_text = benchmark_text.replace(
+                "- Idea in the product owner's own words:",
+                "- Idea in the product owner's own words: Help users finish one useful task",
+            )
+            benchmark_text = benchmark_text.replace(
+                "- Why this matters now:",
+                "- Why this matters now: Existing completion is too slow",
+            )
+            benchmark_text = benchmark_text.replace(
+                "- Target user and triggering situation:",
+                "- Target user and triggering situation: First-time mobile user under time pressure",
+            )
+            benchmark_text = benchmark_text.replace(
+                "- Most expensive or risky assumption:",
+                "- Most expensive or risky assumption: A shorter flow still produces a useful result",
+            )
+            benchmark_text = benchmark_text.replace(
+                "- Questions that could change whether or what we build:",
+                "- Questions that could change whether or what we build: Where users abandon the current flow",
+            )
+            benchmark_text = benchmark_text.replace(
+                "| RSH-01 |  |  |  |  |  |  |",
+                "| RSH-01 | Where do users abandon? | Five observed sessions | Consented beta users | Three stopped before confirmation | Small beta sample | Prototype a shorter confirmation step |",
+            )
+            benchmark_text = benchmark_text.replace(
+                "| DEC-01 |  |  |  |  |  |",
+                "| DEC-01 | RSH-01 | Reduce first-use steps | One-screen confirmation prototype | Keep multi-step flow only for advanced mode | FLOW-01 |",
             )
             benchmark_text = benchmark_text.replace(
                 "| BASE-01 | Primary flow | Browser walkthrough |  |",
@@ -109,6 +141,41 @@ class SkillValidationTests(unittest.TestCase):
                 release_audit.stdout + release_audit.stderr,
             )
             self.assertIn("PASS", release_audit.stdout)
+
+    def test_open_p0_bad_case_blocks_release_and_verified_case_passes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory) / "demo-product"
+            target.mkdir()
+            initialized = run(str(INIT), "--target", str(target))
+            self.assertEqual(initialized.returncode, 0, initialized.stderr)
+
+            bad_cases = target / "docs" / "product-workbench" / "BAD_CASES.md"
+            with bad_cases.open("a", encoding="utf-8") as handle:
+                handle.write(
+                    "\n| BAD-001 | 2026-10-24 | FB-001 | Retry creates a duplicate | "
+                    "One durable write | Two writes | P0 | API idempotency | API-01 | "
+                    "Integration test for duplicate submission | Product owner | reproduced | "
+                    "— | 0 first occurrence |\n"
+                )
+
+            release_audit = run(str(AUDIT), "--target", str(target), "--release")
+            self.assertEqual(release_audit.returncode, 1)
+            self.assertIn("BAD_CASE_P0_OPEN", release_audit.stdout)
+
+            text = bad_cases.read_text(encoding="utf-8").replace(
+                "| reproduced | — | 0 first occurrence |",
+                "| verified | preview test run 42 | 0 first occurrence |",
+            )
+            bad_cases.write_text(text, encoding="utf-8")
+            non_release_audit = run(str(AUDIT), "--target", str(target))
+            self.assertNotIn("BAD_CASE_", non_release_audit.stdout)
+
+            text = bad_cases.read_text(encoding="utf-8").replace(
+                "| 0 first occurrence |", "| 1 |"
+            )
+            bad_cases.write_text(text, encoding="utf-8")
+            recurrence_audit = run(str(AUDIT), "--target", str(target))
+            self.assertIn("BAD_CASE_RECURRENCE_ANALYSIS", recurrence_audit.stdout)
 
     def test_initializer_refuses_overwrite_and_preserves_unknown_files(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

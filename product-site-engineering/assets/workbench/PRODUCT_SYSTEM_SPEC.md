@@ -4,6 +4,14 @@ Status: draft
 
 Initialized: {{DATE}}
 
+## 0. Discovery handoff
+
+- Benchmark version that supports this specification:
+- Original idea/research IDs:
+- Requirement/design decision IDs:
+- Assumptions still awaiting user or production evidence:
+- Bad cases this version must prevent:
+
 ## 1. Product contract
 
 - One-sentence outcome:
@@ -23,6 +31,7 @@ Initialized: {{DATE}}
 - Evidence that a user received value:
 - Evidence that the product is confusing or harmful:
 - Beta size and duration:
+- Bad-case triggers that must be recorded even if no metric moves:
 
 ## 4. Information architecture
 

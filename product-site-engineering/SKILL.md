@@ -1,40 +1,50 @@
 ---
 name: product-site-engineering
-description: Build, audit, refactor, migrate, or release a user-facing website or web app as an engineering-grade vertical slice. Use when work spans benchmark definition, product requirements, acceptance criteria, frontend/backend behavior, observability, deployment, AI or data safety, and feedback; especially for product workbenches, real failure states, protected-asset checks, or requirement-to-production delivery. Do not use for an isolated copy edit, one CSS tweak, or a question that needs no product workflow.
+description: Carry a user-facing website or web app from idea and product research through requirements, design, implementation, testing, release, and evidence-led iteration. Use when work needs benchmarked product discovery, engineering-grade vertical slices, protected assets, observability, AI/data safety, deployment, or durable bad-case regression memory. Do not use for an isolated copy edit, one CSS tweak, or a question that needs no product workflow.
 ---
 
 # Product Site Engineering
 
-Turn a website request into a coherent vertical slice that can be inspected, tested, observed, released, and improved from evidence.
+Carry a website from an early idea through research, requirements, design, implementation, release, and evidence-led improvement. Keep unsatisfactory results as durable bad cases so the same failure does not quietly return.
 
 ## Operating contract
 
 1. Read repository instructions and the current product, acceptance, architecture, and deployment sources of truth before changing behavior.
 2. Inspect the working tree and preserve unrelated user changes.
-3. Freeze a versioned benchmark before a non-trivial build, redesign, migration, or release. If direction changes, update the benchmark and affected acceptance IDs before implementation.
+3. For non-trivial work, begin the benchmark while the idea is still being shaped. Record research questions and evidence, then trace the chosen requirement and design direction back to them before implementation.
 4. Name the acceptance IDs the implementation is intended to satisfy. If the project has no acceptance matrix, create the minimal workbench or add scoped IDs before implementation.
 5. Ask the product owner only when a choice changes positioning, billing, data boundaries, content rights, regulated or psychological safety scope, or causes an irreversible external effect. Decide reversible implementation details from evidence.
 6. Work in one coherent vertical slice. Do not add adjacent features merely because they are easy to generate.
-7. Report missing source material, unrun production checks, failed tests, and runtime blockers as soon as known. Never turn “specified” into “implemented” or “locally passed” into “production verified.”
+7. Put every failed test, rejected output, repeated complaint, or product-owner “this is not right” into the bad-case register before the conversation or test report disappears. Link the case to a regression check and the layer responsible for preventing it.
+8. Report missing source material, unrun production checks, failed tests, and runtime blockers as soon as known. Never turn “specified” into “implemented” or “locally passed” into “production verified.”
 
 ## Delivery loop
 
 Follow this order unless the repository defines a stricter one:
 
-`intent -> frozen benchmark -> source-of-truth spec -> acceptance IDs -> task split -> implementation -> automated tests -> review -> preview/production verification -> user feedback`
+`idea -> research questions -> evidence -> requirements -> design hypothesis -> frozen benchmark -> acceptance IDs -> implementation -> tests -> bad cases -> release -> user feedback -> next benchmark`
 
 For the detailed artifact contract and exit criteria, read [references/delivery-loop.md](references/delivery-loop.md).
 
-### 1. Establish the product contract
+### 1. Turn the idea into evidence
 
-- Write one sentence for the primary outcome, the target user, the main loop, and explicit non-goals.
+- Write the original idea in the owner's language, including why it matters now and what remains unknown.
+- Research the user, triggering situation, current alternatives, comparable products, standards, technical constraints, and likely failure modes in proportion to the decision.
+- Keep research notes separate from decisions. Record source, author or publisher, method, date, finding, confidence, and what the finding changes.
+- Trace the chosen requirement and design hypothesis to the idea and evidence that support them. Mark assumptions that still need a prototype, interview, usability test, or production signal.
+
+Use [references/benchmark-first.md](references/benchmark-first.md) for the idea-to-product trace. When specialized external Skills would help with discovery, visual direction, UI review, or React performance, read [references/external-skill-integration.md](references/external-skill-integration.md) and compose only the relevant one.
+
+### 2. Establish the product contract
+
+- Write one sentence for the primary outcome, the target user, the main loop, and explicit non-goals, grounded in the discovery evidence.
 - Separate current facts, decisions, hypotheses, and future ideas.
 - Keep historical PRDs as history; do not let them silently override the current source of truth.
 - Convert subjective goals such as “natural,” “premium,” or “fast” into observable scenarios and thresholds.
 
-### 2. Freeze the benchmark
+### 3. Freeze the benchmark
 
-- Capture current-state evidence before implementation.
+- Include the idea thesis, research questions and findings, requirement decisions, design hypotheses, and current-state evidence before implementation.
 - Select two to five comparable products, standards, or baselines and record each source, author or publisher, verification date, useful principle, and excluded copying.
 - Define anti-benchmarks, weighted quality dimensions, targets, measurement methods, and mapped acceptance IDs.
 - Set the benchmark to `frozen` before task splitting. When direction changes, increment its version, update it first, re-align affected sources of truth, and re-freeze it before code changes.
@@ -42,13 +52,13 @@ For the detailed artifact contract and exit criteria, read [references/delivery-
 
 Read [references/benchmark-first.md](references/benchmark-first.md) for the full contract. Use [references/website-building-resources.md](references/website-building-resources.md) only when selecting relevant learning sources; do not load every external rule into every task.
 
-### 3. Protect existing product assets
+### 4. Protect existing product assets
 
 Before navigation or visual restructuring, make an internal before/after asset map covering every route, user-facing capability, saved-data key, and minimum discoverable entry point.
 
 Stop and request approval if the change would delete, hide, rename beyond recognition, redirect, or reinterpret a protected asset. Prefer migration and backward compatibility over silent data loss. See [references/frontend-quality.md](references/frontend-quality.md).
 
-### 4. Choose the smallest mature architecture
+### 5. Choose the smallest mature architecture
 
 Use this decision order:
 
@@ -60,7 +70,7 @@ Use this decision order:
 
 Do not mix a framework migration with unrelated feature development. Freeze observable behavior, migrate behind a preview, and prove equivalence before switching traffic.
 
-### 5. Implement the complete slice
+### 6. Implement the complete slice
 
 Cover the path from the user's entry point through state, API, persistence, feedback, and recovery. Every public control must:
 
@@ -71,7 +81,17 @@ Cover the path from the user's entry point through state, API, persistence, feed
 
 Validate empty, loading, success, error, timeout, retry, cancellation, duplicate submission, malformed input, stale data, and storage failure where applicable. Apply the frontend checklist in [references/frontend-quality.md](references/frontend-quality.md) and the API/data contract in [references/backend-api-data.md](references/backend-api-data.md).
 
-### 6. Add observability as product behavior
+### 7. Preserve bad cases and prove prevention
+
+- Create a bad case whenever a test fails in a meaningful way, the owner rejects an output, a user cannot complete the intended task, or a known problem returns.
+- Remove personal or secret content. Preserve the triggering situation, expected result, observed result, severity, responsible layer, owner, and recurrence count.
+- Add or update an acceptance/eval ID before fixing. Record the prevention guard: deterministic test, browser scenario, AI eval, monitoring rule, content review, or explicit product decision.
+- A resolved label is insufficient. Store evidence that the original scenario now passes. If the problem returns, increment recurrence and explain why the earlier guard failed.
+- Block release for unresolved P0 bad cases unless the product owner explicitly accepts the documented risk.
+
+The initialized workbench contains `BAD_CASES.md`; its structure is checked by the release audit. Do not leave durable failure knowledge only in chat, issue comments, screenshots, or model memory.
+
+### 8. Add observability as product behavior
 
 Generate one correlation ID at the request boundary, return it to the client, and propagate it through backend dependencies. Log events and outcomes, not user content.
 
@@ -79,20 +99,20 @@ Use an allowlist schema. Do not log request bodies, chat or form text, cookies, 
 
 For fields, streaming lifecycle events, dashboards, alert signals, and TypeScript examples, read [references/observability.md](references/observability.md). Copy and customize the workbench log schema rather than inventing ad hoc `console.log` payloads.
 
-### 7. Treat AI behavior as tested application code
+### 9. Treat AI behavior as tested application code
 
 Only apply this section when the product calls a model.
 
 - Keep model calls, prompts, secrets, safety logic, and private retrieval on the server.
 - Version prompts in code and test prompt changes in the same review as the product behavior they change.
 - Prefer state contracts, retrieval quality, and deterministic guards before making the prompt larger.
-- Build eval cases from real, de-identified failures; separate deterministic assertions, human review, and model-graded checks.
+- Build eval cases from the bad-case register and real de-identified failures; separate deterministic assertions, human review, and model-graded checks.
 - Require user approval for long-term memory and keep it viewable, editable, and deletable.
 - Do not claim a prompt rule is implemented until an executable test or production guard enforces it.
 
 Read [references/ai-product-safety.md](references/ai-product-safety.md) for high-stakes and knowledge-grounded products. Read [references/prompt-learning-resources.md](references/prompt-learning-resources.md) only when designing or reviewing prompts.
 
-### 8. Verify and release
+### 10. Verify and release
 
 Run the repository's relevant format, lint, typecheck, unit, integration, end-to-end, build, security, migration, and AI eval commands. Test a real mobile-sized flow and a deployed smoke path when release is in scope.
 
@@ -114,6 +134,7 @@ The workbench includes:
 
 - product system spec and non-goals;
 - versioned benchmark, current baseline, references, anti-benchmarks, and weighted targets;
+- idea thesis, product-research evidence, requirement/design trace, and durable bad-case register;
 - acceptance matrix with stable IDs;
 - engineering boundaries and reuse decisions;
 - protected asset register;

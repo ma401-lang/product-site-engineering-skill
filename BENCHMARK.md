@@ -1,7 +1,7 @@
 # Product Site Engineering Skill benchmark
 
 Benchmark version: `1.2`
-Status: `draft`
+Status: `frozen`
 Owner: `ma401-lang`
 Last updated: 2026-10-24
 
@@ -13,6 +13,31 @@ This file is the direction control for the Skill repository itself. Change it be
 - Primary outcome: carry a website from an early idea through product research, requirements, design, implementation, testing, release and evidence-led improvement without losing known failures.
 - Non-goal: become a framework starter, design-style catalog, prompt dump, community hub, or replacement for product-owner judgment.
 - Non-negotiable boundaries: no private Psyche Guide prompts or user data; no invented production evidence; no copying reference branding or protected content.
+
+## v1.2 idea, research and decision trace
+
+### Original idea and uncertainty
+
+- Idea in the product owner's words: benchmark should begin with the idea, continue through product research and design, and remember every unsatisfactory result as a bad case so AI does not repeat it.
+- Why this matters now: v1.1 began too close to implementation, while the public explanation did not give readers a clear sense of what they could accomplish.
+- Known fact: the engineering, observability, deployment and safety layers already existed and passed automated checks.
+- Riskiest assumption: documentation alone would preserve failure knowledge without an executable bad-case contract and release gate.
+- Decision-changing question: can the workbench make discovery and failure memory concrete enough to audit without forcing teams to invent research or bad cases?
+
+### Research evidence
+
+| Research ID | Method/source | Finding | Confidence/limitation | Decision impact |
+|---|---|---|---|---|
+| RSH-01 | Product-owner review recorded in `BASE-04` | The lifecycle, homepage story and external-Skill visibility were incomplete; durable bad-case memory was a release requirement | Direct owner evidence; clarity still needs owner re-review after publication | Expand benchmark structure, rewrite README and add bad-case controls |
+| RSH-02 | Current primary repository review of Anthropic, Vercel, nextlevelbuilder and obra Skills | Each Skill serves a distinct stage; copying them into one bundle would blur licenses, trust and updates | Repositories are mutable and need re-verification when installed | Show real direct links and authors on the homepage; keep integration guidance local and third-party Skills independently installed |
+
+### Requirement and design decisions
+
+| Decision ID | Evidence | Requirement/design choice | Rejected alternative | Validation |
+|---|---|---|---|---|
+| DEC-01 | RSH-01 | Add idea, research and requirement/design trace to the benchmark template and strict release audit | Keep benchmark limited to implementation quality | `BENCH-03` plus release-audit regression test |
+| DEC-02 | RSH-01 | Add a durable 14-field bad-case register with P0 release blocking and recurrence analysis | Keep failures only in feedback logs or chat | `BADCASE-01`, `BADCASE-02` and automated bad-case test |
+| DEC-03 | RSH-01, RSH-02 | Rewrite the README as one concrete idea-to-product story and show real external Skills in a visible stage table | Add another capability list or hide links in a secondary reference | `BAD-001`, README review and link inspection |
 
 ## Baseline captured before v1.1 implementation
 
@@ -51,14 +76,14 @@ This file is the direction control for the Skill repository itself. Change it be
 
 Scores use this anchor: `1` absent, `2` ad hoc, `3` documented, `4` executable and tested, `5` release-gated with traceable evidence.
 
-| Dimension | Weight | v1.0 baseline | v1.1 target | v1.1 evidence |
+| Dimension | Weight | v1.1 baseline | v1.2 target | v1.2 evidence |
 |---|---:|---:|---:|---|
-| Idea-to-product continuity | 20 | 2 | 5 | Benchmark and workbench trace idea thesis, research evidence, requirement decisions, design hypotheses and delivery evidence |
-| Durable bad-case learning | 20 | 1 | 5 | Every unsatisfactory test or user-reported failure has a structured record, responsible layer, prevention check, status and recurrence history |
+| Idea-to-product continuity | 20 | 2 | 5 | Benchmark template and release audit require idea fields, a complete `RSH-*` row and a complete `DEC-*` trace before release |
+| Durable bad-case learning | 20 | 1 | 5 | Root and workbench bad-case registers, required fields, stable regression IDs, P0 release blocking, resolution evidence and recurrence analysis |
 | End-to-end website engineering coverage | 15 | 4 | 4 | Frontend, backend, logs, AI, deployment, rollback and feedback remain connected to the expanded discovery loop |
-| Repository learnability and human clarity | 15 | 2 | 4 | README leads with concrete outcomes and one connected example, uses ordinary sentences, and avoids slogan-heavy contrast writing |
-| External website-Skill usability | 10 | 2 | 4 | The README names the actual Skills, authors, direct paths, use cases and composition boundaries instead of hiding them behind a resource summary |
-| Reproducibility and release gates | 10 | 5 | 5 | Tests cover benchmark completeness and bad-case persistence; strict audit blocks incomplete release evidence |
+| Repository learnability and human clarity | 15 | 2 | 4 | README opens with a concrete product idea, follows it through the full lifecycle and explains deliverables in ordinary connected prose |
+| External website-Skill usability | 10 | 2 | 4 | README visibly names six actual Skills with authors, direct paths, stage-specific value and composition boundaries |
+| Reproducibility and release gates | 10 | 5 | 5 | Seven automated tests, both Skill validators, Python compilation and diff checks pass |
 | Privacy, safety and evidence honesty | 10 | 4 | 4 | Existing data/logging/AI boundaries remain non-negotiable; bad cases are de-identified before storage |
 
 Weighted target: `450 / 500` (equivalent to `4.5 / 5`). This number is a compact summary; the evidence column and automated checks are authoritative.
@@ -77,4 +102,4 @@ Weighted target: `450 / 500` (equivalent to `4.5 / 5`). This number is a compact
 |---|---|---|
 | 1.0 | 2026-10-24 | Initial reusable website product engineering Skill released locally |
 | 1.1 | 2026-10-24 | Adopt benchmark-first delivery, attributed web-learning sources, README information hierarchy and an executable release gate |
-| 1.2 | 2026-10-24 | Draft direction: extend benchmark control from idea and research through design and delivery; add durable bad-case learning; rewrite the public explanation around concrete use |
+| 1.2 | 2026-10-24 | Extended benchmark control from idea and research through design and delivery; added durable bad-case learning, visible external Skills and a concrete public explanation; re-frozen after automated verification |

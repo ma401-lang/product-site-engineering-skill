@@ -13,6 +13,7 @@ SKILL_NAME = "product-site-engineering"
 REQUIRED_REFERENCES = {
     "benchmark-first.md",
     "delivery-loop.md",
+    "external-skill-integration.md",
     "frontend-quality.md",
     "backend-api-data.md",
     "observability.md",
@@ -80,6 +81,7 @@ def validate(argument: str) -> list[str]:
         skill / "agents" / "openai.yaml",
         skill / "assets" / "examples" / "typescript" / "observability.ts",
         skill / "assets" / "workbench" / "BENCHMARK.md",
+        skill / "assets" / "workbench" / "BAD_CASES.md",
         skill / "assets" / "workbench" / "frontend-event.schema.json",
         skill / "assets" / "workbench" / "log-event.schema.json",
     }

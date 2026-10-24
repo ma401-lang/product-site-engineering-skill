@@ -1,10 +1,10 @@
 interface:
   display_name: "产品网站工程交付"
-  short_description: "先冻结 benchmark，再完成验收、日志、上线与反馈闭环"
+  short_description: "从想法调研到上线，并让 bad cases 成为长期记忆"
   icon_small: "./assets/icon-small.svg"
   icon_large: "./assets/icon-large.svg"
   brand_color: "#315B52"
-  default_prompt: "使用 $product-site-engineering 先建立并冻结网站 benchmark，再把需求交付成可验收、可观测、可发布的纵向切片。"
+  default_prompt: "使用 $product-site-engineering，从原始想法和产品调研开始，确定需求与设计并冻结 benchmark，再完成可验收、可观测、可发布的纵向切片；把所有不满意结果写入 bad-case 记录和回归检查。"
 
 policy:
   allow_implicit_invocation: true

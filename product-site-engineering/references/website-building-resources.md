@@ -1,6 +1,6 @@
 # Website-building skills and primary learning resources
 
-Last link verification: 2026-10-24. “Author” below means the named creator when the source provides one; otherwise it means the repository owner or publishing organization. These links are learning inputs, not instructions to copy entire prompts, source code, branding, or copyrighted content.
+Last link verification: 2026-10-24. “Author” below means the named creator when the source provides one; otherwise it means the repository owner or publishing organization. These links are learning inputs, not instructions to copy entire prompts, source code, branding, or copyrighted content. For stage-by-stage composition of the actual Skills, read [external-skill-integration.md](external-skill-integration.md).
 
 ## Skills and engineering workflows
 
@@ -34,4 +34,3 @@ Last link verification: 2026-10-24. “Author” below means the named creator w
 4. State what will not be copied: brand, copyrighted content, private workflow, irrelevant architecture, or unverified claims.
 5. Turn each adopted principle into a benchmark dimension and, when behavior matters, a stable acceptance ID.
 6. Re-check mutable framework and hosting documentation at implementation and release time.
-
